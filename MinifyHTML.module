@@ -30,13 +30,13 @@ class MinifyHTML extends WireData implements Module {
 			'title' => 'MinifyHTML', 
 
 			// version: major, minor, revision, i.e. 100 = 1.0.0
-			'version' => 100, 
+			'version' => 101, 
 
 			// summary is brief description of what this module is
 			'summary' => 'Minify your HTML output for all pages.',
 			
 			// Optional URL to more information about the module
-			'href' => 'http://www.processwire.com',
+			'href' => 'https://github.com/michamichamicha/ProcessWire_MinifyHTML',
 
 			// singular=true: indicates that only one instance of the module is allowed.
 			// This is usually what you want for modules that attach hooks. 
@@ -75,12 +75,14 @@ class MinifyHTML extends WireData implements Module {
     	$search = array(
         	'/\>[^\S ]+/s', //strip whitespaces after tags, except space
 	        '/[^\S ]+\</s', //strip whitespaces before tags, except space
-			'/(\s)+/s'  // shorten multiple whitespace sequences
+			'/(\s)+/s',  // shorten multiple whitespace sequences
+			'/<!--[^>]*-->/s'  // comment string
    	     	);
     	$replace = array(
 			'>',
 			'<',
-			'\\1'
+			'\\1',
+			''
 			);
 		$event->return = preg_replace($search, $replace, $event->return);
 
